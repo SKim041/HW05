@@ -42,7 +42,7 @@ private:
 	float TotalDist = 0;
 
 	UPROPERTY(EditAnywhere)
-	FVector Start = FVector(0, 0, 0);
+	FVector Start = FVector::ZeroVector;	//FVector(0, 0, 0)
 
 	UPROPERTY(EditAnywhere)
 	float EventProbability = 50;

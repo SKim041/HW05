@@ -10,15 +10,15 @@ DEFINE_LOG_CATEGORY(LogMyActor);
 AMyActor::AMyActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;	// ì•ˆì“¸ë•Œ ë„ê¸°
 
-	// ·çÆ® ÄÄÆ÷³ÍÆ®·Î ¼³Á¤
+	// ë£¨íŠ¸ ì»´í¬ë„ŒíŠ¸ë¡œ ì„¤ì •
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
 	RootComponent = MeshComponent;
 }
 
 void AMyActor::CreateEvent() {
-	int RandomValue = FMath::RandRange(0, 100);
+	int RandomValue = FMath::RandRange(1, 100);
 	if (RandomValue <= this->EventProbability) {
 		this->CountEvnt++;
 		UE_LOG(LogMyActor, Warning, TEXT("Event Triggered!"));
@@ -53,7 +53,7 @@ void AMyActor::Move() {
 	SetActorLocation(Start * 100);
 	CreateEvent();
 
-	// 10¹ø ½ÇÇà ÈÄ Å¸ÀÌ¸Ó ÇØÁ¦
+	// 10ë²ˆ ì‹¤í–‰ í›„ íƒ€ì´ë¨¸ í•´ì œ
 	if (MoveCount == TotalMoveCount) {
 		UE_LOG(LogMyActor, Warning,
 			TEXT("Total Distance: %.3f, Total Event Count: %d"), TotalDist, CountEvnt);
@@ -70,9 +70,10 @@ void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SetActorLocation(Start);
 	UE_LOG(LogMyActor, Warning, TEXT("Start Location: %s"), *(Start.ToString()));
 
-	//1ÃÊ ¸¶´Ù Move() ½ÇÇà
+	//1ì´ˆ ë§ˆë‹¤ Move() ì‹¤í–‰
 	GetWorld()->GetTimerManager().SetTimer(
 		MoveTimerHandle,
 		this,
